@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class TableStringHandler : MonoBehaviour
 {
-    private int _id = 0;
+    private int _id;
     [SerializeField] private TMP_InputField _name;
     [SerializeField] private TMP_InputField _type;
     [SerializeField] private TMP_InputField _speaker;
@@ -24,14 +24,13 @@ public class TableStringHandler : MonoBehaviour
     private void Awake()
     {
         FindLastId();
-
         _save.Add(() => Save());
     }
 
     private void FindLastId()
     {
         int lastId = 0;
-        while (PlayerPrefs.HasKey("TableData_" + _id.ToString()));
+        while (PlayerPrefs.HasKey("TableData_" + lastId.ToString()))
         {
             lastId++;
         }
@@ -58,13 +57,11 @@ public class TableStringHandler : MonoBehaviour
         string jsonData = JsonUtility.ToJson(tableData);
 
         PlayerPrefs.SetString("TableData_" + _id.ToString(), jsonData);
-
-        Debug.Log(jsonData);
     }
 
-    private void Load()
+    private void Load(int id)
     {
-        string jsonData = PlayerPrefs.GetString("TableData_" + _id);
+        string jsonData = PlayerPrefs.GetString("TableData_" + id.ToString());
 
         if (!string.IsNullOrEmpty(jsonData))
         {
@@ -82,7 +79,7 @@ public class TableStringHandler : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("No data found for _id: " + _id);
+            Debug.LogWarning("No data found for _id: " + id);
         }
     }
 }
