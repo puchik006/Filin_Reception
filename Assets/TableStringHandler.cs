@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -96,10 +95,4 @@ public class TableData
     public string TimeEnd;
     public int Day;
     public int Month;
-}
-
-
-public class TableDataManager: MonoBehaviour
-{
-    public List<TableData> data;
 }
