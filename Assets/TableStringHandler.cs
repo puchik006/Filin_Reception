@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,10 +19,15 @@ public class TableStringHandler : MonoBehaviour
     [SerializeField] private Button _add;
     [SerializeField] private Button _delete;
 
+    public static event Action ButtonAddPressed;
+    public static event Action<int> ButtonDeletePressed;
+
     private void Awake()
     {
         FindLastId();
         _save.Add(() => Save());
+        _add.Add(() => ButtonAddPressed?.Invoke());
+        _delete.Add(() => ButtonDeletePressed?.Invoke(_id));
     }
 
     private void FindLastId()
@@ -34,8 +38,6 @@ public class TableStringHandler : MonoBehaviour
             lastId++;
         }
         _id = lastId;
-
-        Debug.Log(_id);
     }
 
     private void Save()
@@ -58,7 +60,7 @@ public class TableStringHandler : MonoBehaviour
         PlayerPrefs.SetString("TableData_" + _id.ToString(), jsonData);
     }
 
-    private void Load(int id)
+    public void Load(int id)
     {
         string jsonData = PlayerPrefs.GetString("TableData_" + id.ToString());
 
@@ -81,18 +83,4 @@ public class TableStringHandler : MonoBehaviour
             Debug.LogWarning("No data found for _id: " + id);
         }
     }
-}
-
-[Serializable]
-public class TableData
-{
-    public string Name;
-    public string Type;
-    public string Speaker;
-    public string Place;
-    public string Description;
-    public string TimeStart;
-    public string TimeEnd;
-    public int Day;
-    public int Month;
 }

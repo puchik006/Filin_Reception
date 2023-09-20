@@ -7,18 +7,32 @@ public class TableDataManager: MonoBehaviour
 
     private void OnEnable()
     {
-        
+        TableStringHandler.ButtonAddPressed += () => AddDataString();
     }
 
-    private void Update()
+    private void Awake()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        LoadDataTable();
+    }
+
+    private void LoadDataTable()
+    {
+        int lastId = 0;
+        while (PlayerPrefs.HasKey("TableData_" + lastId.ToString()))
         {
-            AddString();
+            LoadDataString(lastId);
+            lastId++;
         }
     }
 
-    private void AddString()
+    private void LoadDataString(int id)
+    {
+        GameObject dataString;
+        dataString =  Instantiate(_stringPrefab, _content);
+        dataString.GetComponent<TableStringHandler>().Load(id);
+    }
+
+    private void AddDataString()
     {
         Instantiate(_stringPrefab, _content);
     }
