@@ -40,8 +40,8 @@ public class TableStringHandler : MonoBehaviour
             Description = _description.text,
             TimeStart = _start.text,
             TimeEnd = _end.text,
-            Day = _day.value,     
-            Month = _month.value
+            Day = _day.value + 1,     
+            Month = _month.value +1
         };
 
         string jsonData = JsonUtility.ToJson(tableData);
@@ -64,8 +64,8 @@ public class TableStringHandler : MonoBehaviour
             _description.text = tableData.Description;
             _start.text = tableData.TimeStart;
             _end.text = tableData.TimeEnd;
-            _day.value = tableData.Day;
-            _month.value = tableData.Month;
+            _day.value = tableData.Day - 1;
+            _month.value = tableData.Month - 1;
         }
         else
         {
