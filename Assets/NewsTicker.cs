@@ -18,6 +18,7 @@ public class NewsTicker : MonoBehaviour
     private List<TMP_Text> _activeTexts;
     private int _currentIndex;
     private float _timeSinceLastSpawn;
+    private int _itemsSpawned;
 
     private void Start()
     {
@@ -26,6 +27,7 @@ public class NewsTicker : MonoBehaviour
         InitializeTextPool();
         _currentIndex = 0;
         _timeSinceLastSpawn = 0f;
+        _itemsSpawned = 0;
     }
 
     private void Update()
@@ -62,6 +64,11 @@ public class NewsTicker : MonoBehaviour
             textItem.text = _items[_currentIndex];
             _currentIndex = (_currentIndex + 1) % _items.Length;
             _activeTexts.Add(textItem);
+            _itemsSpawned++;
+            if (_itemsSpawned >= _items.Length)
+            {
+                _itemsSpawned = 0; // Reset when all items are spawned
+            }
         }
     }
 
@@ -73,10 +80,10 @@ public class NewsTicker : MonoBehaviour
             RectTransform rectTransform = textItem.rectTransform;
             rectTransform.anchoredPosition += Vector2.left * _pixelPerSecond * Time.deltaTime;
 
-            if (rectTransform.anchoredPosition.x <= -rectTransform.rect.width)
+            if (rectTransform.anchoredPosition.x <= -_width)
             {
                 // Move text back to the right and return it to the pool
-                rectTransform.anchoredPosition = new Vector2(_width, 0f);
+                rectTransform.anchoredPosition = new Vector2(_width * (_maxVisibleItems - 1), 0f);
                 _activeTexts.RemoveAt(i);
                 _textPool.Enqueue(textItem);
                 i--;
