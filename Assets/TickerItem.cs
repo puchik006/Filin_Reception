@@ -16,14 +16,16 @@ public class TickerItem : MonoBehaviour
         _pixelPerSecond = pixelsPerSecond;
         _rectTransform = GetComponent<RectTransform>();
         GetComponent<TMP_Text>().text = message;
+
+        // Set the initial position off-screen to the right
         _rectTransform.anchoredPosition = new Vector2(_width, 0f);
     }
 
     private void Update()
     {
-        _rectTransform.position += Vector3.right * _pixelPerSecond * Time.deltaTime;
+        _rectTransform.position += Vector3.left * _pixelPerSecond * Time.deltaTime;
 
-        if (GetXPosition >= _width + Width)
+        if (GetXPosition <=0 -  _width - Width)
         {
             Destroy(gameObject);
         }
