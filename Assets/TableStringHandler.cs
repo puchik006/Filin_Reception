@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class TableStringHandler : MonoBehaviour
 {
-    private int _id;
+    public int Id;
     [SerializeField] private TMP_InputField _name;
     [SerializeField] private TMP_InputField _type;
     [SerializeField] private TMP_InputField _speaker;
@@ -24,20 +24,9 @@ public class TableStringHandler : MonoBehaviour
 
     private void Awake()
     {
-        FindLastId();
         _save.Add(() => Save());
         _add.Add(() => ButtonAddPressed?.Invoke());
-        _delete.Add(() => ButtonDeletePressed?.Invoke(_id));
-    }
-
-    private void FindLastId()
-    {
-        int lastId = 0;
-        while (PlayerPrefs.HasKey("TableData_" + lastId.ToString()))
-        {
-            lastId++;
-        }
-        _id = lastId;
+        _delete.Add(() => ButtonDeletePressed?.Invoke(Id));
     }
 
     private void Save()
@@ -57,7 +46,7 @@ public class TableStringHandler : MonoBehaviour
 
         string jsonData = JsonUtility.ToJson(tableData);
 
-        PlayerPrefs.SetString("TableData_" + _id.ToString(), jsonData);
+        PlayerPrefs.SetString("TableData_" + Id.ToString(), jsonData);
     }
 
     public void Load(int id)
