@@ -51,8 +51,6 @@ public class LeftScreenManager : MonoBehaviour
         {
             string json = PlayerPrefs.GetString("TableData_" + id.ToString());
 
-            Debug.Log(json);
-
             TableData tableData = JsonUtility.FromJson<TableData>(json);
 
             DateTime timeStart = DateTime.ParseExact(tableData.TimeStart, "HH:mm", null);
@@ -60,12 +58,8 @@ public class LeftScreenManager : MonoBehaviour
 
             if (tableData.Day == currentTime.Day && tableData.Month == currentTime.Month)
             {
-                Debug.Log("asgasashasaaaaaa" + id.ToString());
-
                 if (currentTime.TimeOfDay >= timeStart.TimeOfDay && currentTime.TimeOfDay <= timeEnd.TimeOfDay)
                 {
-                    Debug.Log("asgasash" + id.ToString());
-
                     _rightNowName.text = tableData.Name;
                     _rightNowText.text = tableData.Description;
                     break;

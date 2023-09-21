@@ -28,7 +28,6 @@ public class TableDataManager: MonoBehaviour
 
         while (PlayerPrefs.HasKey("TableData_" + lastId.ToString()))
         {
-            Debug.Log("TableData_" + lastId.ToString());
             LoadDataString(lastId);
             lastId++;
         }

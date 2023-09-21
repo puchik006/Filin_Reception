@@ -7,6 +7,7 @@ using UnityEngine;
 public class RightScreenManager : MonoBehaviour
 {
     [SerializeField] private TMP_Text _todayDate;
+    [SerializeField] private TMP_Text _tomorowDate;
     [SerializeField] private GameObject _firstString;
     [SerializeField] private GameObject _secondString;
     [SerializeField] private GameObject _thirdString;
@@ -15,16 +16,15 @@ public class RightScreenManager : MonoBehaviour
 
     private void Awake()
     {
-        ShowTodayDate();
+        _todayDate.text = GetRusStringDate(DateTime.Now);
+        _tomorowDate.text = GetRusStringDate(DateTime.Now.AddDays(1));
         FillTodaySchedule();
         StartCoroutine(ShowTodaySchedule());
     }
 
-    private void ShowTodayDate()
+    private string GetRusStringDate(DateTime date)
     {
-        DateTime currentDate = DateTime.Now;
-        string russianDate = currentDate.ToString("dd MMMM", new System.Globalization.CultureInfo("ru-RU"));
-        _todayDate.text = russianDate;
+        return date.ToString("dd MMMM", new System.Globalization.CultureInfo("ru-RU"));
     }
 
     private void FillTodaySchedule()
@@ -50,8 +50,6 @@ public class RightScreenManager : MonoBehaviour
 
     private IEnumerator ShowTodaySchedule()
     {
-        Debug.Log(_todaySchedule.Count);
-
         while (true)
         {
             int pageQty = _todaySchedule.Count % 3 == 0 ? _todaySchedule.Count / 3 : (_todaySchedule.Count / 3) + 1;
