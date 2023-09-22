@@ -2741,10 +2741,10 @@ RectTransform:
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.005859375, y: -1460.8}
-  m_SizeDelta: {x: -4666.6, y: -3629.7}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: 0.005859375, y: 354.05005}
+  m_SizeDelta: {x: 0, y: 210.30005}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &989713847
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2766,7 +2766,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tickerTextPrefab: {fileID: 7734421334006382820, guid: 39a5201a4226f9d40b05a7986da1a198, type: 3}
-  _duration: 1
+  _duration: 3
 --- !u!1 &1009937550
 GameObject:
   m_ObjectHideFlags: 0
