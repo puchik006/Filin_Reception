@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class NewsTicker : MonoBehaviour
 {
     [SerializeField] private TMP_Text _tickerTextPrefab;
     [Range(0f, 10f)]
     [SerializeField] private float _duration;
-    [SerializeField] private string[] _items;
-    [SerializeField] private int _maxVisibleItems = 3;
+    private List<string> _items = new();
 
     private float _width;
     private float _pixelPerSecond;
@@ -19,6 +17,14 @@ public class NewsTicker : MonoBehaviour
     private int _currentIndex;
     private float _timeSinceLastSpawn;
     private int _itemsSpawned;
+
+    private List<int> _tomorowSchedule = new();
+
+
+    private void Awake()
+    {
+        FillItems();
+    }
 
     private void Start()
     {
@@ -43,12 +49,33 @@ public class NewsTicker : MonoBehaviour
         MoveTextItems();
     }
 
+    private void FillItems()
+    {
+        DateTime tomorrow = DateTime.Now.AddDays(1);
+
+        int id = 0;
+
+        while (PlayerPrefs.HasKey("TableData_" + id.ToString()))
+        {
+            string json = PlayerPrefs.GetString("TableData_" + id.ToString());
+
+            TableData tableData = JsonUtility.FromJson<TableData>(json);
+
+            if (tableData.Day == tomorrow.Day && tableData.Month == tomorrow.Month)
+            {
+                _items.Add(tableData.TimeStart + " " +  tableData.Name);
+            }
+
+            id++;
+        }
+    }
+
     private void InitializeTextPool()
     {
         _textPool = new Queue<TMP_Text>();
         _activeTexts = new List<TMP_Text>();
 
-        for (int i = 0; i < _maxVisibleItems; i++)
+        for (int i = 0; i < _items.Count; i++)
         {
             TMP_Text textItem = Instantiate(_tickerTextPrefab, transform);
             textItem.rectTransform.anchoredPosition = new Vector2(_width, 0f);
@@ -58,16 +85,16 @@ public class NewsTicker : MonoBehaviour
 
     private void ShowNextTickerItem()
     {
-        if (_items.Length > 0)
+        if (_items.Count > 0)
         {
             TMP_Text textItem = _textPool.Dequeue();
             textItem.text = _items[_currentIndex];
-            _currentIndex = (_currentIndex + 1) % _items.Length;
+            _currentIndex = (_currentIndex + 1) % _items.Count;
             _activeTexts.Add(textItem);
             _itemsSpawned++;
-            if (_itemsSpawned >= _items.Length)
+            if (_itemsSpawned >= _items.Count)
             {
-                _itemsSpawned = 0; // Reset when all items are spawned
+                _itemsSpawned = 0;
             }
         }
     }
@@ -82,8 +109,7 @@ public class NewsTicker : MonoBehaviour
 
             if (rectTransform.anchoredPosition.x <= -_width)
             {
-                // Move text back to the right and return it to the pool
-                rectTransform.anchoredPosition = new Vector2(_width * (_maxVisibleItems - 1), 0f);
+                rectTransform.anchoredPosition = new Vector2(_width , 0f);
                 _activeTexts.RemoveAt(i);
                 _textPool.Enqueue(textItem);
                 i--;

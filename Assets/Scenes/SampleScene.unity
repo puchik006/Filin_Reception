@@ -4850,6 +4850,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _content: {fileID: 1027643309}
   _stringPrefab: {fileID: 6725213952337849745, guid: 77f26c38f13aac94f841f1e98f14373d, type: 3}
+  _btnAdd: {fileID: 597279135}
 --- !u!1 &1571483687
 GameObject:
   m_ObjectHideFlags: 0
