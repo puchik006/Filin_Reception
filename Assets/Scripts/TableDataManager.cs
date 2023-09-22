@@ -1,13 +1,15 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class TableDataManager: MonoBehaviour
 {
     [SerializeField] private Transform _content;
     [SerializeField] private GameObject _stringPrefab;
+    [SerializeField] private Button _btnAdd;
 
     private void OnEnable()
     {
-        TableStringHandler.ButtonAddPressed += () => AddDataString();
+        _btnAdd.Add(() => AddDataString());
         TableStringHandler.ButtonDeletePressed += (id) => DeleteDataString(id);
     }
 
@@ -105,6 +107,11 @@ public class TableDataManager: MonoBehaviour
                 }
             }
         }
+    }
+
+    private void OnDisable()
+    {
+        TableStringHandler.ButtonDeletePressed -= (id) => DeleteDataString(id);
     }
 
 }
