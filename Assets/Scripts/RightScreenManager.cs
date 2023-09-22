@@ -16,10 +16,16 @@ public class RightScreenManager : MonoBehaviour
 
     private void Awake()
     {
+        TableDataManager.TableUpdated += OnTableUpdated;
         _todayDate.text = GetRusStringDate(DateTime.Now);
         _tomorowDate.text = GetRusStringDate(DateTime.Now.AddDays(1));
         FillTodaySchedule();
         StartCoroutine(ShowTodaySchedule());
+    }
+
+    private void OnTableUpdated()
+    {
+        FillTodaySchedule();
     }
 
     private string GetRusStringDate(DateTime date)
@@ -32,6 +38,8 @@ public class RightScreenManager : MonoBehaviour
         DateTime currentTime = DateTime.Now;
 
         int id = 0;
+
+        _todaySchedule.Clear();
 
         while (PlayerPrefs.HasKey("TableData_" + id.ToString()))
         {
@@ -58,18 +66,18 @@ public class RightScreenManager : MonoBehaviour
             currentPage++;
             if (currentPage >= pageQty) currentPage = 0;
 
-            if (currentPage * 3 < _todaySchedule.Count)
+            if ((0 + currentPage*3) < _todaySchedule.Count)
             {
-                _firstString.GetComponent<ScheduleStringHandler>().Load(_todaySchedule[0 + currentPage]);
+                _firstString.GetComponent<ScheduleStringHandler>().Load(_todaySchedule[0 + currentPage * 3]);
             }
             else
             {
                 _firstString.SetActive(false);
             }
 
-            if (currentPage * 3 + 1 < _todaySchedule.Count)
+            if ((1 + currentPage*3) < _todaySchedule.Count)
             {
-                _secondString.GetComponent<ScheduleStringHandler>().Load(_todaySchedule[1 + currentPage]);
+                _secondString.GetComponent<ScheduleStringHandler>().Load(_todaySchedule[1 + currentPage * 3]);
                 _secondString.SetActive(true);
             }
             else
@@ -77,9 +85,9 @@ public class RightScreenManager : MonoBehaviour
                 _secondString.SetActive(false);
             }
 
-            if (currentPage * 3 + 2 < _todaySchedule.Count)
+            if ((2 + currentPage*3) < _todaySchedule.Count)
             {
-                _thirdString.GetComponent<ScheduleStringHandler>().Load(_todaySchedule[2 + currentPage]);
+                _thirdString.GetComponent<ScheduleStringHandler>().Load(_todaySchedule[2 + currentPage * 3]);
                 _thirdString.SetActive(true);
             }
             else
@@ -87,6 +95,11 @@ public class RightScreenManager : MonoBehaviour
                 _thirdString.SetActive(false);
             }
         }
+    }
+
+    private void OnDisable()
+    {
+        TableDataManager.TableUpdated -= OnTableUpdated;
     }
 
 }
