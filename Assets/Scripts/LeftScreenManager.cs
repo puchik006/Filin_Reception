@@ -13,14 +13,17 @@ public class LeftScreenManager : MonoBehaviour
 
     private void Awake()
     {
+        TableDataManager.TableUpdated += OnTableUpdated;
         ShowTodayDate();
         ShowRightNowTableData();
-    }
-
-    private void Start()
-    {
         _rightNowText.pageToDisplay = currentPage;
         StartCoroutine(AutoChangePage());
+    }
+
+    private void OnTableUpdated()
+    {
+        ShowTodayDate();
+        ShowRightNowTableData();
     }
 
     private void ShowTodayDate()
@@ -34,7 +37,7 @@ public class LeftScreenManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(5);
             currentPage++;
             if (currentPage > _rightNowText.textInfo.pageCount) currentPage = 1;
             _rightNowText.pageToDisplay = currentPage;
@@ -69,5 +72,9 @@ public class LeftScreenManager : MonoBehaviour
             id++;
         }
     }
-    
+
+    private void OnDisable()
+    {
+        TableDataManager.TableUpdated -= OnTableUpdated;
+    }
 }

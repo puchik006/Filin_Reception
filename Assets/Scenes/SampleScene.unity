@@ -2795,11 +2795,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _tickerTextPrefab: {fileID: 7734421334006382820, guid: 39a5201a4226f9d40b05a7986da1a198, type: 3}
   _duration: 1
-  _items:
-  - wefwef
-  - sdgaa
-  - 2342
-  _maxVisibleItems: 3
 --- !u!1 &1009937550
 GameObject:
   m_ObjectHideFlags: 0
@@ -4851,6 +4846,7 @@ MonoBehaviour:
   _content: {fileID: 1027643309}
   _stringPrefab: {fileID: 6725213952337849745, guid: 77f26c38f13aac94f841f1e98f14373d, type: 3}
   _btnAdd: {fileID: 597279135}
+  _btnUpdate: {fileID: 1761718773}
 --- !u!1 &1571483687
 GameObject:
   m_ObjectHideFlags: 0
@@ -5344,7 +5340,7 @@ GameObject:
   - component: {fileID: 1761718774}
   - component: {fileID: 1761718773}
   m_Layer: 5
-  m_Name: Refresh
+  m_Name: Update
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class TableDataManager: MonoBehaviour
@@ -6,10 +7,14 @@ public class TableDataManager: MonoBehaviour
     [SerializeField] private Transform _content;
     [SerializeField] private GameObject _stringPrefab;
     [SerializeField] private Button _btnAdd;
+    [SerializeField] private Button _btnUpdate;
+
+    public static event Action TableUpdated;
 
     private void OnEnable()
     {
         _btnAdd.Add(() => AddDataString());
+        _btnUpdate.Add(() => TableUpdated?.Invoke());
         TableStringHandler.ButtonDeletePressed += (id) => DeleteDataString(id);
     }
 

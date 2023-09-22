@@ -85,16 +85,20 @@ public class NewsTicker : MonoBehaviour
 
     private void ShowNextTickerItem()
     {
+        
         if (_items.Count > 0)
         {
-            TMP_Text textItem = _textPool.Dequeue();
-            textItem.text = _items[_currentIndex];
-            _currentIndex = (_currentIndex + 1) % _items.Count;
-            _activeTexts.Add(textItem);
-            _itemsSpawned++;
-            if (_itemsSpawned >= _items.Count)
+            if (_textPool.Count > 0)
             {
-                _itemsSpawned = 0;
+                TMP_Text textItem = _textPool.Dequeue();
+                textItem.text = _items[_currentIndex];
+                _currentIndex = (_currentIndex + 1) % _items.Count;
+                _activeTexts.Add(textItem);
+                _itemsSpawned++;
+                if (_itemsSpawned >= _items.Count)
+                {
+                    _itemsSpawned = 0;
+                }
             }
         }
     }
