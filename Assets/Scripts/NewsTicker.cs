@@ -23,6 +23,12 @@ public class NewsTicker : MonoBehaviour
 
     private void Awake()
     {
+        TableDataManager.TableUpdated += OnTableUpdated;
+        FillItems();
+    }
+
+    private void OnTableUpdated()
+    {
         FillItems();
     }
 
@@ -54,6 +60,8 @@ public class NewsTicker : MonoBehaviour
         DateTime tomorrow = DateTime.Now.AddDays(1);
 
         int id = 0;
+
+        _items.Clear();
 
         while (PlayerPrefs.HasKey("TableData_" + id.ToString()))
         {
@@ -119,6 +127,11 @@ public class NewsTicker : MonoBehaviour
                 i--;
             }
         }
+    }
+
+    private void OnDisable()
+    {
+        TableDataManager.TableUpdated -= OnTableUpdated;
     }
 }
 
