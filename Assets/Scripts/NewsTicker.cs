@@ -57,23 +57,19 @@ public class NewsTicker : MonoBehaviour
 
     private void FillItems()
     {
-        DateTime tomorrow = DateTime.Now.AddDays(1);
 
         int id = 0;
 
         _items.Clear();
 
-        while (PlayerPrefs.HasKey("TableData_" + id.ToString()))
+        while (PlayerPrefs.HasKey("TieckerData_" + id.ToString()))
         {
-            string json = PlayerPrefs.GetString("TableData_" + id.ToString());
+            string json = PlayerPrefs.GetString("TieckerData_" + id.ToString());
 
             TableData tableData = JsonUtility.FromJson<TableData>(json);
 
-            //if (tableData.Day == tomorrow.Day && tableData.Month == tomorrow.Month)
-            //{
-            //    _items.Add(tableData.TimeStart + " " +  tableData.Name);
-            //}
-
+            _items.Add(tableData.TimeStart + " " +  tableData.Name);
+ 
             id++;
         }
     }

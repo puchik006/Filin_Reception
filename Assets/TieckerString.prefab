@@ -1639,6 +1639,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 516591689953002194}
+  - component: {fileID: 7428653625225543904}
   m_Layer: 5
   m_Name: TieckerString
   m_TagString: Untagged
@@ -1671,3 +1672,20 @@ RectTransform:
   m_AnchoredPosition: {x: -1268.0284, y: -14.030991}
   m_SizeDelta: {x: 3043.043, y: 337.3846}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &7428653625225543904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7990178270878249706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd0dd094e7fd8b64daa64342c831c65b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Id: 0
+  _start: {fileID: 5938402156589088069}
+  _name: {fileID: 4200467062281018761}
+  _save: {fileID: 1323301066179208606}
+  _delete: {fileID: 202975396626566060}
