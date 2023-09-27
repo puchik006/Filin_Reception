@@ -69,10 +69,10 @@ public class NewsTicker : MonoBehaviour
 
             TableData tableData = JsonUtility.FromJson<TableData>(json);
 
-            if (tableData.Day == tomorrow.Day && tableData.Month == tomorrow.Month)
-            {
-                _items.Add(tableData.TimeStart + " " +  tableData.Name);
-            }
+            //if (tableData.Day == tomorrow.Day && tableData.Month == tomorrow.Month)
+            //{
+            //    _items.Add(tableData.TimeStart + " " +  tableData.Name);
+            //}
 
             id++;
         }

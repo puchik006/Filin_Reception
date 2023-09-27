@@ -17,15 +17,19 @@ public class RightScreenManager : MonoBehaviour
     private void Awake()
     {
         TableDataManager.TableUpdated += OnTableUpdated;
+
         _todayDate.text = GetRusStringDate(DateTime.Now);
         _tomorowDate.text = GetRusStringDate(DateTime.Now.AddDays(1));
+
         FillTodaySchedule();
         StartCoroutine(ShowTodaySchedule());
     }
 
     private void OnTableUpdated()
     {
+        StopAllCoroutines();
         FillTodaySchedule();
+        StartCoroutine(ShowTodaySchedule());
     }
 
     private string GetRusStringDate(DateTime date)
@@ -35,22 +39,13 @@ public class RightScreenManager : MonoBehaviour
 
     private void FillTodaySchedule()
     {
-        DateTime currentTime = DateTime.Now;
-
         int id = 0;
 
         _todaySchedule.Clear();
 
         while (PlayerPrefs.HasKey("TableData_" + id.ToString()))
         {
-            string json = PlayerPrefs.GetString("TableData_" + id.ToString());
-
-            TableData tableData = JsonUtility.FromJson<TableData>(json);
-
-            if (tableData.Day == currentTime.Day && tableData.Month == currentTime.Month)
-            {
-                _todaySchedule.Add(id);
-            }
+            _todaySchedule.Add(id);
 
             id++;
         }
@@ -62,7 +57,7 @@ public class RightScreenManager : MonoBehaviour
         {
             int pageQty = _todaySchedule.Count % 3 == 0 ? _todaySchedule.Count / 3 : (_todaySchedule.Count / 3) + 1;
 
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(5);
             currentPage++;
             if (currentPage >= pageQty) currentPage = 0;
 

@@ -37,16 +37,15 @@ public class TableStringHandler : MonoBehaviour
             Type = _type.text,
             Speaker = _speaker.text,
             Place = _place.text,
-            Description = _description.text,
             TimeStart = _start.text,
             TimeEnd = _end.text,
-            Day = _day.value + 1,     
-            Month = _month.value +1
         };
 
         string jsonData = JsonUtility.ToJson(tableData);
 
         PlayerPrefs.SetString("TableData_" + Id.ToString(), jsonData);
+
+        TableDataManager.TableUpdated?.Invoke();
     }
 
     public void Load(int id)
@@ -61,11 +60,8 @@ public class TableStringHandler : MonoBehaviour
             _type.text = tableData.Type;
             _speaker.text = tableData.Speaker;
             _place.text = tableData.Place;
-            _description.text = tableData.Description;
             _start.text = tableData.TimeStart;
             _end.text = tableData.TimeEnd;
-            _day.value = tableData.Day - 1;
-            _month.value = tableData.Month - 1;
         }
         else
         {

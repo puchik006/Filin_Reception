@@ -9,7 +9,7 @@ public class TableDataManager: MonoBehaviour
     [SerializeField] private Button _btnAdd;
     [SerializeField] private Button _btnUpdate;
 
-    public static event Action TableUpdated;
+    public static Action TableUpdated;
 
     private void OnEnable()
     {
@@ -112,6 +112,8 @@ public class TableDataManager: MonoBehaviour
                 }
             }
         }
+
+        TableUpdated?.Invoke();
     }
 
     private void OnDisable()
