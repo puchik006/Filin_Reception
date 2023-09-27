@@ -12,7 +12,7 @@ public class TieckerStringHandler : MonoBehaviour
     [SerializeField] private Button _save;
     [SerializeField] private Button _delete;
 
-    public static event Action ButtonAddPressed;
+    //public static event Action ButtonAddPressed;
     public static event Action<int> ButtonDeletePressed;
 
     private void Awake()
@@ -27,14 +27,13 @@ public class TieckerStringHandler : MonoBehaviour
         {
             Name = _name.text,
             TimeStart = _start.text
-            
         };
 
         string jsonData = JsonUtility.ToJson(tableData);
 
         PlayerPrefs.SetString("TieckerData_" + Id.ToString(), jsonData);
 
-        TableDataManager.TableUpdated?.Invoke();
+        TieckerDataManager.TableUpdated?.Invoke();
     }
 
     public void Load(int id)

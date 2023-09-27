@@ -18,18 +18,24 @@ public class NewsTicker : MonoBehaviour
     private float _timeSinceLastSpawn;
     private int _itemsSpawned;
 
-    private List<int> _tomorowSchedule = new();
-
-
     private void Awake()
     {
-        TableDataManager.TableUpdated += OnTableUpdated;
+        TieckerDataManager.TableUpdated += OnTableUpdated;
         FillItems();
     }
 
     private void OnTableUpdated()
     {
         FillItems();
+        _textPool.Clear();
+        _activeTexts.Clear();
+
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Destroy(transform.GetChild(i).gameObject);
+        }
+
+        InitializeTextPool();
     }
 
     private void Start()
@@ -57,7 +63,6 @@ public class NewsTicker : MonoBehaviour
 
     private void FillItems()
     {
-
         int id = 0;
 
         _items.Clear();
@@ -89,7 +94,6 @@ public class NewsTicker : MonoBehaviour
 
     private void ShowNextTickerItem()
     {
-        
         if (_items.Count > 0)
         {
             if (_textPool.Count > 0)
@@ -109,6 +113,10 @@ public class NewsTicker : MonoBehaviour
 
     private void MoveTextItems()
     {
+
+        if (_activeTexts.Count <= 0) return;
+
+
         for (int i = 0; i < _activeTexts.Count; i++)
         {
             TMP_Text textItem = _activeTexts[i];
@@ -127,7 +135,7 @@ public class NewsTicker : MonoBehaviour
 
     private void OnDisable()
     {
-        TableDataManager.TableUpdated -= OnTableUpdated;
+        TieckerDataManager.TableUpdated -= OnTableUpdated;
     }
 }
 
