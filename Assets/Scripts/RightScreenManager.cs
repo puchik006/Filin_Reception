@@ -11,6 +11,11 @@ public class RightScreenManager : MonoBehaviour
     [SerializeField] private GameObject _firstString;
     [SerializeField] private GameObject _secondString;
     [SerializeField] private GameObject _thirdString;
+
+    [SerializeField] private TMP_InputField _todayInputDate;
+    [SerializeField] private TMP_InputField _tomorrowInputDate;
+    [SerializeField] private TMP_Text _leftScreenToday;
+
     private List<int> _todaySchedule = new();
     private int currentPage = 0;
 
@@ -18,11 +23,25 @@ public class RightScreenManager : MonoBehaviour
     {
         TableDataManager.TableUpdated += OnTableUpdated;
 
-        _todayDate.text = GetRusStringDate(DateTime.Now);
-        _tomorowDate.text = GetRusStringDate(DateTime.Now.AddDays(1));
+        _todayDate.text = _todayInputDate.text;
+        _tomorowDate.text = _tomorrowInputDate.text;
 
         FillTodaySchedule();
         StartCoroutine(ShowTodaySchedule());
+
+        _todayInputDate.onSubmit.AddListener(UpdateTodayDate);
+        _tomorrowInputDate.onSubmit.AddListener(UpdateTomorrowDate);
+    }
+
+    private void UpdateTodayDate(string date)
+    {
+        _todayDate.text = date;
+        _leftScreenToday.text = date;
+    }
+
+    private void UpdateTomorrowDate(string date)
+    {
+        _tomorowDate.text = date;
     }
 
     private void OnTableUpdated()

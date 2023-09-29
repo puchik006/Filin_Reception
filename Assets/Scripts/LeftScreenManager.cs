@@ -14,6 +14,7 @@ public class LeftScreenManager : MonoBehaviour
     [SerializeField] private TMP_InputField _rightNowNameInput;
     [SerializeField] private TMP_InputField _rightNowTextInput;
 
+
     private string _keyName = "RightNowName";
     private string _keyText = "RightNowText";
 
@@ -56,7 +57,7 @@ public class LeftScreenManager : MonoBehaviour
     {
         DateTime currentDate = DateTime.Now;
         string russianDate = currentDate.ToString("dd MMMM", new System.Globalization.CultureInfo("ru-RU"));
-        _todayDate.text = russianDate;
+        //_todayDate.text = russianDate;
     }
 
     private IEnumerator AutoChangePage()
