@@ -9,6 +9,7 @@ public class ColorImageChanger : MonoBehaviour
     private void Awake()
     {
         _image = GetComponent<Image>();
+        ChangeColorButton.ColorChanged += OnColorChanged;
     }
 
     private void OnColorChanged(TextType type, Color color)
@@ -16,6 +17,7 @@ public class ColorImageChanger : MonoBehaviour
         if (Type == type)
         {
             _image.color = color;
+            Debug.Log(_image.color);
         }
     }
 

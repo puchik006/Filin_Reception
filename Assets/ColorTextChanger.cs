@@ -25,6 +25,3 @@ public class ColorTextChanger : MonoBehaviour
         ChangeColorButton.ColorChanged -= OnColorChanged;
     }
 }
-
-
-
