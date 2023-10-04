@@ -7,14 +7,12 @@ public class TieckerDataManager: MonoBehaviour
     [SerializeField] private Transform _content;
     [SerializeField] private GameObject _stringPrefab;
     [SerializeField] private Button _btnAdd;
-    //[SerializeField] private Button _btnUpdate;
 
     public static Action TableUpdated;
 
     private void OnEnable()
     {
         _btnAdd.Add(() => AddDataString());
-        //_btnUpdate.Add(() => TableUpdated?.Invoke());
         TieckerStringHandler.ButtonDeletePressed += (id) => DeleteDataString(id);
     }
 
@@ -65,6 +63,7 @@ public class TieckerDataManager: MonoBehaviour
         GameObject dataString;
         dataString = Instantiate(_stringPrefab, _content);
         dataString.GetComponent<TieckerStringHandler>().Id = LastId();
+        dataString.GetComponent<TieckerStringHandler>().Save();
     }
 
     private void DeleteDataString(int id)

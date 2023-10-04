@@ -65,6 +65,7 @@ public class TableDataManager: MonoBehaviour
         GameObject dataString;
         dataString = Instantiate(_stringPrefab, _content);
         dataString.GetComponent<TableStringHandler>().Id = LastId();
+        dataString.GetComponent<TableStringHandler>().Save();
     }
 
     private void DeleteDataString(int id)

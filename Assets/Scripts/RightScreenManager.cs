@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -49,11 +48,6 @@ public class RightScreenManager : MonoBehaviour
         StopAllCoroutines();
         FillTodaySchedule();
         StartCoroutine(ShowTodaySchedule());
-    }
-
-    private string GetRusStringDate(DateTime date)
-    {
-        return date.ToString("dd MMMM", new System.Globalization.CultureInfo("ru-RU"));
     }
 
     private void FillTodaySchedule()

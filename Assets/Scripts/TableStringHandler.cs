@@ -27,9 +27,10 @@ public class TableStringHandler : MonoBehaviour
         _save.Add(() => Save());
         _add.Add(() => ButtonAddPressed?.Invoke());
         _delete.Add(() => ButtonDeletePressed?.Invoke(Id));
+        SaveAll.SaveAllData += Save;
     }
 
-    private void Save()
+    public void Save()
     {
         TableData tableData = new TableData
         {
@@ -46,6 +47,8 @@ public class TableStringHandler : MonoBehaviour
         PlayerPrefs.SetString("TableData_" + Id.ToString(), jsonData);
 
         TableDataManager.TableUpdated?.Invoke();
+
+        Debug.Log(PlayerPrefs.GetString("TableData_" + Id.ToString()));
     }
 
     public void Load(int id)
@@ -67,5 +70,15 @@ public class TableStringHandler : MonoBehaviour
         {
             Debug.LogWarning("No data found for _id: " + id);
         }
+    }
+
+    private void OnDestroy()
+    {
+        SaveAll.SaveAllData -= Save;
+    }
+
+    private void OnDisable()
+    {
+        SaveAll.SaveAllData -= Save;
     }
 }

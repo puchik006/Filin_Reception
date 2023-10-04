@@ -19,9 +19,10 @@ public class TieckerStringHandler : MonoBehaviour
     {
         _save.Add(() => Save());
         _delete.Add(() => ButtonDeletePressed?.Invoke(Id));
+        SaveAll.SaveAllData += Save;
     }
 
-    private void Save()
+    public void Save()
     {
         TableData tableData = new TableData
         {
@@ -51,5 +52,15 @@ public class TieckerStringHandler : MonoBehaviour
         {
             Debug.LogWarning("No data found for _id: " + id);
         }
+    }
+
+    private void OnDestroy()
+    {
+        SaveAll.SaveAllData -= Save;
+    }
+
+    private void OnDisable()
+    {
+        SaveAll.SaveAllData -= Save;
     }
 }
