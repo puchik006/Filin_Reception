@@ -27,7 +27,9 @@ public class LeftScreenManager : MonoBehaviour
         StartCoroutine(AutoChangePage());
         LoadData();
 
-        _btnSave.Add(() => SaveAndUpdate());
+        //_btnSave.Add(() => SaveAndUpdate());
+
+        SaveAll.SaveAllData += SaveAndUpdate;
     }
 
     private void SaveAndUpdate()
@@ -71,33 +73,9 @@ public class LeftScreenManager : MonoBehaviour
         }
     }
 
-    //private void ShowRightNowTableData()
-    //{
-    //    DateTime currentTime = DateTime.Now;
-
-    //    int id = 0;
-
-    //    while (PlayerPrefs.HasKey("TableData_" + id.ToString()))
-    //    {
-    //        string json = PlayerPrefs.GetString("TableData_" + id.ToString());
-
-    //        TableData tableData = JsonUtility.FromJson<TableData>(json);
-
-    //        DateTime timeStart = DateTime.ParseExact(tableData.TimeStart, "HH:mm", null);
-    //        DateTime timeEnd = DateTime.ParseExact(tableData.TimeEnd, "HH:mm", null);
-
-    //        if (tableData.Day == currentTime.Day && tableData.Month == currentTime.Month)
-    //        {
-    //            if (currentTime.TimeOfDay >= timeStart.TimeOfDay && currentTime.TimeOfDay <= timeEnd.TimeOfDay)
-    //            {
-    //                _rightNowName.text = tableData.Name;
-    //                _rightNowText.text = tableData.Description;
-    //                break;
-    //            }
-    //        }
-
-    //        id++;
-    //    }
-    //}
+    private void OnDisable()
+    {
+        SaveAll.SaveAllData -= SaveAndUpdate;
+    }
 
 }

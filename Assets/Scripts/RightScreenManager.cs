@@ -22,8 +22,7 @@ public class RightScreenManager : MonoBehaviour
     {
         TableDataManager.TableUpdated += OnTableUpdated;
 
-        _todayDate.text = _todayInputDate.text;
-        _tomorowDate.text = _tomorrowInputDate.text;
+        LoadDates();
 
         FillTodaySchedule();
         StartCoroutine(ShowTodaySchedule());
@@ -32,15 +31,35 @@ public class RightScreenManager : MonoBehaviour
         _tomorrowInputDate.onSubmit.AddListener(UpdateTomorrowDate);
     }
 
+    private void LoadDates()
+    {
+        if (PlayerPrefs.HasKey("Today"))
+        {
+            _todayDate.text = PlayerPrefs.GetString("Today");
+            _leftScreenToday.text = PlayerPrefs.GetString("Today");
+            _todayInputDate.text = PlayerPrefs.GetString("Today");
+        }
+
+        if (PlayerPrefs.HasKey("Tomorrow"))
+        {
+            _tomorowDate.text = PlayerPrefs.GetString("Tomorrow");
+            _tomorrowInputDate.text = PlayerPrefs.GetString("Tomorrow");
+        }
+    }
+
     private void UpdateTodayDate(string date)
     {
         _todayDate.text = date;
         _leftScreenToday.text = date;
+
+        PlayerPrefs.SetString("Today",date);
     }
 
     private void UpdateTomorrowDate(string date)
     {
         _tomorowDate.text = date;
+
+        PlayerPrefs.SetString("Tomorrow", date);
     }
 
     private void OnTableUpdated()

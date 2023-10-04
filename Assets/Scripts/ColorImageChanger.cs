@@ -17,7 +17,6 @@ public class ColorImageChanger : MonoBehaviour
         if (Type == type)
         {
             _image.color = color;
-            Debug.Log(_image.color);
         }
     }
 
