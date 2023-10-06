@@ -21,6 +21,11 @@ public class NewsTicker : MonoBehaviour
 
     private void Awake()
     {
+        if (PlayerPrefs.HasKey("StringSpeed"))
+        {
+            _duration = PlayerPrefs.GetFloat("StringSpeed");
+        }
+
         TieckerDataManager.TableUpdated += OnTableUpdated;
         _slider.value = _duration;
         _slider.onValueChanged.AddListener(OnSliderValueChanged);
@@ -52,6 +57,7 @@ public class NewsTicker : MonoBehaviour
 
     private void OnSliderValueChanged(float value)
     {
+        PlayerPrefs.SetFloat("StringSpeed",value);
         _duration = value;
         _pixelPerSecond = _width / _duration;
     }

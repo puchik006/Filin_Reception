@@ -10824,7 +10824,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15622a3a5a5664c4f80a6ac70f642f82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _slider: {fileID: 0}
+  _slider: {fileID: 1496361214}
   _tickerTextPrefab: {fileID: 7734421334006382820, guid: 39a5201a4226f9d40b05a7986da1a198, type: 3}
 --- !u!1 &996650367
 GameObject:
