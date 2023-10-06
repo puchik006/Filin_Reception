@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NewsTicker : MonoBehaviour
 {
+    [SerializeField] private Slider _slider;
     [SerializeField] private TMP_Text _tickerTextPrefab;
-    [Range(0f, 10f)]
-    [SerializeField] private float _duration;
+    private float _duration = 5f;
     private List<string> _items = new();
 
     private float _width;
@@ -21,21 +22,9 @@ public class NewsTicker : MonoBehaviour
     private void Awake()
     {
         TieckerDataManager.TableUpdated += OnTableUpdated;
+        _slider.value = _duration;
+        _slider.onValueChanged.AddListener(OnSliderValueChanged);
         FillItems();
-    }
-
-    private void OnTableUpdated()
-    {
-        FillItems();
-        _textPool.Clear();
-        _activeTexts.Clear();
-
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            Destroy(transform.GetChild(i).gameObject);
-        }
-
-        InitializeTextPool();
     }
 
     private void Start()
@@ -59,6 +48,26 @@ public class NewsTicker : MonoBehaviour
         }
 
         MoveTextItems();
+    }
+
+    private void OnSliderValueChanged(float value)
+    {
+        _duration = value;
+        _pixelPerSecond = _width / _duration;
+    }
+
+    private void OnTableUpdated()
+    {
+        FillItems();
+        _textPool.Clear();
+        _activeTexts.Clear();
+
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Destroy(transform.GetChild(i).gameObject);
+        }
+
+        InitializeTextPool();
     }
 
     private void FillItems()

@@ -24,12 +24,8 @@ public class RightScreenManager : MonoBehaviour
         SaveAll.SaveAllData += SaveAndUpdateDates;
 
         LoadDates();
-
         FillTodaySchedule();
         StartCoroutine(ShowTodaySchedule());
-
-        //_todayInputDate.onSubmit.AddListener(UpdateTodayDate);
-        //_tomorrowInputDate.onSubmit.AddListener(UpdateTomorrowDate);
     }
 
     private void LoadDates()
@@ -53,21 +49,6 @@ public class RightScreenManager : MonoBehaviour
         PlayerPrefs.SetString("Today", _todayInputDate.text);
         PlayerPrefs.SetString("Tomorrow", _tomorrowInputDate.text);
         LoadDates();
-    }
-
-    private void UpdateTodayDate(string date)
-    {
-        _todayDate.text = date;
-        _leftScreenToday.text = date;
-
-        PlayerPrefs.SetString("Today",date);
-    }
-
-    private void UpdateTomorrowDate(string date)
-    {
-        _tomorowDate.text = date;
-
-        PlayerPrefs.SetString("Tomorrow", date);
     }
 
     private void OnTableUpdated()
@@ -95,15 +76,18 @@ public class RightScreenManager : MonoBehaviour
     {
         while (true)
         {
+            yield return new WaitForSeconds(5);
+
             int pageQty = _todaySchedule.Count % 3 == 0 ? _todaySchedule.Count / 3 : (_todaySchedule.Count / 3) + 1;
 
-            yield return new WaitForSeconds(5);
             currentPage++;
+
             if (currentPage >= pageQty) currentPage = 0;
 
             if ((0 + currentPage*3) < _todaySchedule.Count)
             {
                 _firstString.GetComponent<ScheduleStringHandler>().Load(_todaySchedule[0 + currentPage * 3]);
+                _firstString.SetActive(true);
             }
             else
             {
