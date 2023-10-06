@@ -21,14 +21,15 @@ public class RightScreenManager : MonoBehaviour
     private void Awake()
     {
         TableDataManager.TableUpdated += OnTableUpdated;
+        SaveAll.SaveAllData += SaveAndUpdateDates;
 
         LoadDates();
 
         FillTodaySchedule();
         StartCoroutine(ShowTodaySchedule());
 
-        _todayInputDate.onSubmit.AddListener(UpdateTodayDate);
-        _tomorrowInputDate.onSubmit.AddListener(UpdateTomorrowDate);
+        //_todayInputDate.onSubmit.AddListener(UpdateTodayDate);
+        //_tomorrowInputDate.onSubmit.AddListener(UpdateTomorrowDate);
     }
 
     private void LoadDates()
@@ -45,6 +46,13 @@ public class RightScreenManager : MonoBehaviour
             _tomorowDate.text = PlayerPrefs.GetString("Tomorrow");
             _tomorrowInputDate.text = PlayerPrefs.GetString("Tomorrow");
         }
+    }
+
+    private void SaveAndUpdateDates()
+    {
+        PlayerPrefs.SetString("Today", _todayInputDate.text);
+        PlayerPrefs.SetString("Tomorrow", _tomorrowInputDate.text);
+        LoadDates();
     }
 
     private void UpdateTodayDate(string date)
@@ -127,6 +135,7 @@ public class RightScreenManager : MonoBehaviour
     private void OnDisable()
     {
         TableDataManager.TableUpdated -= OnTableUpdated;
+        SaveAll.SaveAllData -= SaveAndUpdateDates;
     }
 
 }
