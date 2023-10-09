@@ -2,7 +2,7 @@
 
 public class ActivateAllDisplays : MonoBehaviour
 {
-    private void Start()
+    private void Awake()
     {
         for (int i = 1; i < Display.displays.Length; i++)
         {
@@ -10,3 +10,4 @@ public class ActivateAllDisplays : MonoBehaviour
         }
     }
 }
+
