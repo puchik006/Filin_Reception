@@ -19,13 +19,13 @@ public class TableStringHandler : MonoBehaviour
     [SerializeField] private Button _add;
     [SerializeField] private Button _delete;
 
-    public static event Action ButtonAddPressed;
+    public static event Action<int> ButtonAddPressed;
     public static event Action<int> ButtonDeletePressed;
 
     private void Awake()
     {
         _save.Add(() => Save());
-        _add.Add(() => ButtonAddPressed?.Invoke());
+        _add.Add(() => ButtonAddPressed?.Invoke(Id));
         _delete.Add(() => ButtonDeletePressed?.Invoke(Id));
         SaveAll.SaveAllData += Save;
     }

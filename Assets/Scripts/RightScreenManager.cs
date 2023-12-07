@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -7,16 +6,20 @@ public class RightScreenManager : MonoBehaviour
 {
     [SerializeField] private TMP_Text _todayDate;
     [SerializeField] private TMP_Text _tomorowDate;
-    [SerializeField] private GameObject _firstString;
-    [SerializeField] private GameObject _secondString;
-    [SerializeField] private GameObject _thirdString;
+    //[SerializeField] private GameObject _firstString;
+    //[SerializeField] private GameObject _secondString;
+    //[SerializeField] private GameObject _thirdString;
+    //[SerializeField] private GameObject _fourthString;
+    //[SerializeField] private GameObject _fifsString;
+
+    [SerializeField] private List<GameObject> _scheduleStrings;
 
     [SerializeField] private TMP_InputField _todayInputDate;
     [SerializeField] private TMP_InputField _tomorrowInputDate;
     [SerializeField] private TMP_Text _leftScreenToday;
 
     private List<int> _todaySchedule = new();
-    private int currentPage = 0;
+    //private int currentPage = 0;
 
     private void Awake()
     {
@@ -25,7 +28,9 @@ public class RightScreenManager : MonoBehaviour
 
         LoadDates();
         FillTodaySchedule();
-        StartCoroutine(ShowTodaySchedule());
+        //StartCoroutine(ShowTodaySchedule());
+        SwithOffStrings();
+        FillUpTodaySchedule();
     }
 
     private void LoadDates()
@@ -53,9 +58,15 @@ public class RightScreenManager : MonoBehaviour
 
     private void OnTableUpdated()
     {
-        StopAllCoroutines();
+        //StopAllCoroutines();
         FillTodaySchedule();
-        StartCoroutine(ShowTodaySchedule());
+        //StartCoroutine(ShowTodaySchedule());
+        FillUpTodaySchedule();
+    }
+
+    private void SwithOffStrings()
+    {
+        _scheduleStrings.ForEach(e => e.SetActive(false));
     }
 
     private void FillTodaySchedule()
@@ -72,49 +83,60 @@ public class RightScreenManager : MonoBehaviour
         }
     }
 
-    private IEnumerator ShowTodaySchedule()
+    private void FillUpTodaySchedule()
     {
-        while (true)
+        SwithOffStrings();
+
+        for (int i = 0; i < _todaySchedule.Count; i++)
         {
-            yield return new WaitForSeconds(5);
-
-            int pageQty = _todaySchedule.Count % 3 == 0 ? _todaySchedule.Count / 3 : (_todaySchedule.Count / 3) + 1;
-
-            currentPage++;
-
-            if (currentPage >= pageQty) currentPage = 0;
-
-            if ((0 + currentPage*3) < _todaySchedule.Count)
-            {
-                _firstString.GetComponent<ScheduleStringHandler>().Load(_todaySchedule[0 + currentPage * 3]);
-                _firstString.SetActive(true);
-            }
-            else
-            {
-                _firstString.SetActive(false);
-            }
-
-            if ((1 + currentPage*3) < _todaySchedule.Count)
-            {
-                _secondString.GetComponent<ScheduleStringHandler>().Load(_todaySchedule[1 + currentPage * 3]);
-                _secondString.SetActive(true);
-            }
-            else
-            {
-                _secondString.SetActive(false);
-            }
-
-            if ((2 + currentPage*3) < _todaySchedule.Count)
-            {
-                _thirdString.GetComponent<ScheduleStringHandler>().Load(_todaySchedule[2 + currentPage * 3]);
-                _thirdString.SetActive(true);
-            }
-            else
-            {
-                _thirdString.SetActive(false);
-            }
+            _scheduleStrings[i].SetActive(true);
+            _scheduleStrings[i].GetComponent<ScheduleStringHandler>().Load(i);
         }
     }
+
+    //private IEnumerator ShowTodaySchedule()
+    //{
+    //    while (true)
+    //    {
+    //        yield return new WaitForSeconds(5);
+
+    //        int pageQty = _todaySchedule.Count % 3 == 0 ? _todaySchedule.Count / 3 : (_todaySchedule.Count / 3) + 1;
+
+    //        currentPage++;
+
+    //        if (currentPage >= pageQty) currentPage = 0;
+
+    //        if ((0 + currentPage*3) < _todaySchedule.Count)
+    //        {
+    //            _firstString.GetComponent<ScheduleStringHandler>().Load(_todaySchedule[0 + currentPage * 3]);
+    //            _firstString.SetActive(true);
+    //        }
+    //        else
+    //        {
+    //            _firstString.SetActive(false);
+    //        }
+
+    //        if ((1 + currentPage*3) < _todaySchedule.Count)
+    //        {
+    //            _secondString.GetComponent<ScheduleStringHandler>().Load(_todaySchedule[1 + currentPage * 3]);
+    //            _secondString.SetActive(true);
+    //        }
+    //        else
+    //        {
+    //            _secondString.SetActive(false);
+    //        }
+
+    //        if ((2 + currentPage*3) < _todaySchedule.Count)
+    //        {
+    //            _thirdString.GetComponent<ScheduleStringHandler>().Load(_todaySchedule[2 + currentPage * 3]);
+    //            _thirdString.SetActive(true);
+    //        }
+    //        else
+    //        {
+    //            _thirdString.SetActive(false);
+    //        }
+    //    }
+    //}
 
     private void OnDisable()
     {

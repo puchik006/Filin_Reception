@@ -16,11 +16,50 @@ public class TableDataManager: MonoBehaviour
         _btnAdd.Add(() => AddDataString());
         _btnUpdate.Add(() => TableUpdated?.Invoke());
         TableStringHandler.ButtonDeletePressed += (id) => DeleteDataString(id);
+        TableStringHandler.ButtonAddPressed += (id) => AddDataStringInside(id);
     }
 
     private void Awake()
     {
         LoadDataTable();
+    }
+
+    private void AddDataStringInside(int insertIndex)
+    {
+        int newId = insertIndex + 1;
+
+        if (LastId() < 5)
+        {
+            // Move existing data strings to make space for the new one
+            for (int i = _content.childCount - 1; i >= insertIndex; i--)
+            {
+                TableStringHandler stringHandler = _content.GetChild(i).GetComponent<TableStringHandler>();
+                stringHandler.Id++;
+                stringHandler.Save(); // Save the data with the updated ID
+            }
+
+            // Add the new empty data string at the specified index
+            GameObject dataString = Instantiate(_stringPrefab, _content);
+            TableStringHandler newStringHandler = dataString.GetComponent<TableStringHandler>();
+            newStringHandler.Id = newId;
+            newStringHandler.Save(); // Save the data with the new ID
+
+            foreach (Transform child in _content)
+            {
+                TableStringHandler stringHandler = child.GetComponent<TableStringHandler>();
+                if (stringHandler != null)
+                {
+                    Destroy(child.gameObject);
+                }
+            }
+
+            // Load the data strings again to update the order
+            LoadDataTable();
+        }
+        else
+        {
+            Debug.Log("Max");
+        }
     }
 
     private void LoadDataTable()
@@ -62,10 +101,17 @@ public class TableDataManager: MonoBehaviour
 
     private void AddDataString()
     {
-        GameObject dataString;
-        dataString = Instantiate(_stringPrefab, _content);
-        dataString.GetComponent<TableStringHandler>().Id = LastId();
-        dataString.GetComponent<TableStringHandler>().Save();
+        if (LastId() < 5)
+        {
+            GameObject dataString;
+            dataString = Instantiate(_stringPrefab, _content);
+            dataString.GetComponent<TableStringHandler>().Id = LastId();
+            dataString.GetComponent<TableStringHandler>().Save();
+        }
+        else
+        {
+            Debug.Log("Max");
+        }
     }
 
     private void DeleteDataString(int id)
