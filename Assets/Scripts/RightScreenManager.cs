@@ -17,19 +17,18 @@ public class RightScreenManager : MonoBehaviour
 
     [SerializeField] private TMP_InputField _todayInputDate;
     [SerializeField] private TMP_InputField _tomorrowInputDate;
-    [SerializeField] private TMP_Text _leftScreenToday;
+    //[SerializeField] private TMP_Text _leftScreenToday;
 
     private List<int> _todaySchedule = new();
     //private int currentPage = 0;
 
     private void Awake()
     {
-        ShowTodayDate();
-
         TableDataManager.TableUpdated += OnTableUpdated;
         SaveAll.SaveAllData += SaveAndUpdateDates;
 
-        LoadDates();
+        ShowTodayDate();
+        //LoadDates();
         FillTodaySchedule();
         //StartCoroutine(ShowTodaySchedule());
         SwithOffStrings();
@@ -43,27 +42,27 @@ public class RightScreenManager : MonoBehaviour
         _todayDate.text = russianDate;
     }
 
-    private void LoadDates()
-    {
-        if (PlayerPrefs.HasKey("Today"))
-        {
-            _todayDate.text = PlayerPrefs.GetString("Today");
-            _leftScreenToday.text = PlayerPrefs.GetString("Today");
-            _todayInputDate.text = PlayerPrefs.GetString("Today");
-        }
+    //private void LoadDates()
+    //{
+    //    if (PlayerPrefs.HasKey("Today"))
+    //    {
+    //        //_todayDate.text = PlayerPrefs.GetString("Today");
+    //        //_leftScreenToday.text = PlayerPrefs.GetString("Today");
+    //        _todayInputDate.text = PlayerPrefs.GetString("Today");
+    //    }
 
-        if (PlayerPrefs.HasKey("Tomorrow"))
-        {
-            _tomorowDate.text = PlayerPrefs.GetString("Tomorrow");
-            _tomorrowInputDate.text = PlayerPrefs.GetString("Tomorrow");
-        }
-    }
+    //    if (PlayerPrefs.HasKey("Tomorrow"))
+    //    {
+    //        _tomorowDate.text = PlayerPrefs.GetString("Tomorrow");
+    //        _tomorrowInputDate.text = PlayerPrefs.GetString("Tomorrow");
+    //    }
+    //}
 
     private void SaveAndUpdateDates()
     {
         PlayerPrefs.SetString("Today", _todayInputDate.text);
         PlayerPrefs.SetString("Tomorrow", _tomorrowInputDate.text);
-        LoadDates();
+        //LoadDates();
     }
 
     private void OnTableUpdated()
