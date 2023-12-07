@@ -25,7 +25,7 @@ public class LeftScreenManager : MonoBehaviour
     {
         ShowTodayDate();
         _rightNowText.pageToDisplay = currentPage;
-        StartCoroutine(AutoChangePage());
+       //StartCoroutine(AutoChangePage());
         LoadData();
 
         //_btnSave.Add(() => SaveAndUpdate());
@@ -125,19 +125,19 @@ public class LeftScreenManager : MonoBehaviour
     {
         DateTime currentDate = DateTime.Now;
         string russianDate = currentDate.ToString("dd MMMM", new System.Globalization.CultureInfo("ru-RU"));
-        //_todayDate.text = russianDate;
+        _todayDate.text = russianDate;
     }
 
-    private IEnumerator AutoChangePage()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(5);
-            currentPage++;
-            if (currentPage > _rightNowText.textInfo.pageCount) currentPage = 1;
-            _rightNowText.pageToDisplay = currentPage;
-        }
-    }
+    //private IEnumerator AutoChangePage()
+    //{
+    //    while (true)
+    //    {
+    //        yield return new WaitForSeconds(5);
+    //        currentPage++;
+    //        if (currentPage > _rightNowText.textInfo.pageCount) currentPage = 1;
+    //        _rightNowText.pageToDisplay = currentPage;
+    //    }
+    //}
 
     private void OnDisable()
     {

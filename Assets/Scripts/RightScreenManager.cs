@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -23,6 +24,8 @@ public class RightScreenManager : MonoBehaviour
 
     private void Awake()
     {
+        ShowTodayDate();
+
         TableDataManager.TableUpdated += OnTableUpdated;
         SaveAll.SaveAllData += SaveAndUpdateDates;
 
@@ -31,6 +34,13 @@ public class RightScreenManager : MonoBehaviour
         //StartCoroutine(ShowTodaySchedule());
         SwithOffStrings();
         FillUpTodaySchedule();
+    }
+
+    private void ShowTodayDate()
+    {
+        DateTime currentDate = DateTime.Now;
+        string russianDate = currentDate.ToString("dd MMMM", new System.Globalization.CultureInfo("ru-RU"));
+        _todayDate.text = russianDate;
     }
 
     private void LoadDates()
