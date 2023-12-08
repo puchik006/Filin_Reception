@@ -28,8 +28,7 @@ public class TableDataManager: MonoBehaviour
     {
         int newId = insertIndex + 1;
 
-        if (LastId() < 5)
-        {
+
             // Move existing data strings to make space for the new one
             for (int i = _content.childCount - 1; i >= insertIndex; i--)
             {
@@ -55,11 +54,6 @@ public class TableDataManager: MonoBehaviour
 
             // Load the data strings again to update the order
             LoadDataTable();
-        }
-        else
-        {
-            Debug.Log("Max");
-        }
     }
 
     private void LoadDataTable()
@@ -101,17 +95,10 @@ public class TableDataManager: MonoBehaviour
 
     private void AddDataString()
     {
-        if (LastId() < 5)
-        {
             GameObject dataString;
             dataString = Instantiate(_stringPrefab, _content);
             dataString.GetComponent<TableStringHandler>().Id = LastId();
             dataString.GetComponent<TableStringHandler>().Save();
-        }
-        else
-        {
-            Debug.Log("Max");
-        }
     }
 
     private void DeleteDataString(int id)
