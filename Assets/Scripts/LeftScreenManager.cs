@@ -34,17 +34,6 @@ public class LeftScreenManager : MonoBehaviour
         SaveAll.SaveAllData += SaveAndUpdate;
     }
 
-    //private void OnEnable()
-    //{
-    //    ShowTodayDate();
-    //}
-
-    private void Start()
-    {
-        // Start the coroutine to check conditions every 10 seconds
-        
-    }
-
     private IEnumerator CheckConditionsPeriodically()
     {
         while (true)
